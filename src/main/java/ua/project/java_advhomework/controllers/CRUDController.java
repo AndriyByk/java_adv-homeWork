@@ -23,6 +23,7 @@ public class CRUDController {
         owners.add(new Owner(3, "Petro", true));
         owners.add(new Owner(4, "Yulia", false));
 
+
         pets.add(new HomePet(1, "Sirko", 4, owners.get(0), Type.CAT));
         pets.add(new HomePet(2, "Kokos", 3, owners.get(2), Type.DOG));
         pets.add(new HomePet(3, "Ananas", 5, owners.get(0), Type.DOG));
