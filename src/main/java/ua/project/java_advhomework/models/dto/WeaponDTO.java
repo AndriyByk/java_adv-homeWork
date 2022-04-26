@@ -2,14 +2,14 @@ package ua.project.java_advhomework.models.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
-import ua.project.java_advhomework.models.entity.Captain;
+import ua.project.java_advhomework.models.entity.Weapon;
 
 @Data
 @JsonIgnoreProperties(value = {"hibernateInitializer"})
-public class CaptainDTO {
-    private String name;
+public class WeaponDTO {
+    private String code;
 
-    public CaptainDTO(Captain captain) {
-        this.name = captain.getName();
+    public WeaponDTO(Weapon weapon) {
+        this.code = weapon.getCode();
     }
 }

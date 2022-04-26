@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,4 +25,17 @@ public class DrownedRussianShip {
     @ToString.Exclude
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Captain captain;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<PreviousCaptain> previousCaptains;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "ship_weapon",
+            joinColumns = @JoinColumn(name = "ship_id"),
+            inverseJoinColumns = @JoinColumn(name = "weapon_id")
+    )
+    @ToString.Exclude
+    private List<Weapon> weapons;
 }
