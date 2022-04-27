@@ -1,5 +1,7 @@
 package ua.project.java_advhomework.services.implementation;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
+@Slf4j
 public class DrownedShipService implements IDrownedShipService {
     private IRussianShipDao shipDao;
 
@@ -28,6 +32,7 @@ public class DrownedShipService implements IDrownedShipService {
     public ResponseEntity<DrownedRussianShipDTO> findDrownedWarshipById(int id) {
         DrownedRussianShip drownedRussianShip = shipDao.findById(id).orElse(new DrownedRussianShip());
         if (drownedRussianShip.getId() == 0) {
+            log.error("No content to show");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(new DrownedRussianShipDTO(drownedRussianShip), HttpStatus.OK);
@@ -56,8 +61,10 @@ public class DrownedShipService implements IDrownedShipService {
 
     @Override
     public ResponseEntity<DrownedRussianShipDTO> updateDrownedWarship(int id, DrownedRussianShip drownedRussianShip) {
-        if (shipDao.findAll().stream().allMatch(shipDao -> shipDao.getId() != id))
+        if (shipDao.findAll().stream().allMatch(shipDao -> shipDao.getId() != id)) {
+            log.error("There is no such id");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         DrownedRussianShip ship = shipDao.findById(id).get();
         if (drownedRussianShip.getName() != null)
             ship.setName(drownedRussianShip.getName());
@@ -79,6 +86,7 @@ public class DrownedShipService implements IDrownedShipService {
             shipDao.save(drownedRussianShip);
             return new ResponseEntity<>(shipDao.findAll().stream().map(DrownedRussianShipDTO::new).collect(Collectors.toList()), HttpStatus.OK);
         } else {
+            log.error("DrownedRussianShip is null!!!");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -93,6 +101,7 @@ public class DrownedShipService implements IDrownedShipService {
                     .map(DrownedRussianShipDTO::new)
                     .collect(Collectors.toList()), HttpStatus.OK);
         } else {
+            log.error("There is no such id!!!");
             return new ResponseEntity<>(shipDao
                     .findAll()
                     .stream()
@@ -112,6 +121,7 @@ public class DrownedShipService implements IDrownedShipService {
     public ResponseEntity<DrownedRussianShipWithCaptainDTO> findDrownedWarshipWithCaptainById(int id) {
         DrownedRussianShip drownedRussianShip = shipDao.findById(id).orElse(new DrownedRussianShip());
         if (drownedRussianShip.getId() == 0) {
+            log.error("No content to show");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(new DrownedRussianShipWithCaptainDTO(drownedRussianShip), HttpStatus.OK);
@@ -140,8 +150,10 @@ public class DrownedShipService implements IDrownedShipService {
 
     @Override
     public ResponseEntity<DrownedRussianShipWithCaptainDTO> updateDrownedWarshipWithCaptain(int id, DrownedRussianShip drownedRussianShip) {
-        if (shipDao.findAll().stream().allMatch(shipDao -> shipDao.getId() != id))
+        if (shipDao.findAll().stream().allMatch(shipDao -> shipDao.getId() != id)) {
+            log.error("There is no such id");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         DrownedRussianShip ship = shipDao.findById(id).get();
         if (drownedRussianShip.getName() != null)
             ship.setName(drownedRussianShip.getName());
@@ -163,6 +175,7 @@ public class DrownedShipService implements IDrownedShipService {
             shipDao.save(drownedRussianShip);
             return new ResponseEntity<>(shipDao.findAll().stream().map(DrownedRussianShipWithCaptainDTO::new).collect(Collectors.toList()), HttpStatus.OK);
         } else {
+            log.error("DrownedRussianShip is null!!!");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -177,6 +190,7 @@ public class DrownedShipService implements IDrownedShipService {
                     .map(DrownedRussianShipWithCaptainDTO::new)
                     .collect(Collectors.toList()), HttpStatus.OK);
         } else {
+            log.error("There is no such id!!!");
             return new ResponseEntity<>(shipDao
                     .findAll()
                     .stream()
@@ -199,6 +213,7 @@ public class DrownedShipService implements IDrownedShipService {
     public ResponseEntity<DrownedRussianShipWithPreviousCaptainDTO> findDrownedWarshipWithPreviousCaptainById(int id) {
         DrownedRussianShip drownedRussianShip = shipDao.findById(id).orElse(new DrownedRussianShip());
         if (drownedRussianShip.getId() == 0) {
+            log.error("No content to show");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(new DrownedRussianShipWithPreviousCaptainDTO(drownedRussianShip), HttpStatus.OK);
@@ -227,8 +242,10 @@ public class DrownedShipService implements IDrownedShipService {
 
     @Override
     public ResponseEntity<DrownedRussianShipWithPreviousCaptainDTO> updateDrownedWarshipWithPreviousCaptain(int id, DrownedRussianShip drownedRussianShip) {
-        if (shipDao.findAll().stream().allMatch(shipDao -> shipDao.getId() != id))
+        if (shipDao.findAll().stream().allMatch(shipDao -> shipDao.getId() != id)) {
+            log.error("There is no such id");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         DrownedRussianShip ship = shipDao.findById(id).get();
         if (drownedRussianShip.getName() != null)
             ship.setName(drownedRussianShip.getName());
@@ -250,6 +267,7 @@ public class DrownedShipService implements IDrownedShipService {
             shipDao.save(drownedRussianShip);
             return new ResponseEntity<>(shipDao.findAll().stream().map(DrownedRussianShipWithPreviousCaptainDTO::new).collect(Collectors.toList()), HttpStatus.OK);
         } else {
+            log.error("DrownedRussianShip is null!!!");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -264,6 +282,7 @@ public class DrownedShipService implements IDrownedShipService {
                     .map(DrownedRussianShipWithPreviousCaptainDTO::new)
                     .collect(Collectors.toList()), HttpStatus.OK);
         } else {
+            log.error("There is no such id!!!");
             return new ResponseEntity<>(shipDao
                     .findAll()
                     .stream()
@@ -286,6 +305,7 @@ public class DrownedShipService implements IDrownedShipService {
     public ResponseEntity<DrownedRussianShipWithWeaponDTO> findDrownedWarshipWithWeapon(int id) {
         DrownedRussianShip drownedRussianShip = shipDao.findById(id).orElse(new DrownedRussianShip());
         if (drownedRussianShip.getId() == 0) {
+            log.error("No content to show");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(new DrownedRussianShipWithWeaponDTO(drownedRussianShip), HttpStatus.OK);
@@ -314,8 +334,10 @@ public class DrownedShipService implements IDrownedShipService {
 
     @Override
     public ResponseEntity<DrownedRussianShipWithWeaponDTO> updateDrownedWarshipWithWeapon(int id, DrownedRussianShip drownedRussianShip) {
-        if (shipDao.findAll().stream().allMatch(shipDao -> shipDao.getId() != id))
+        if (shipDao.findAll().stream().allMatch(shipDao -> shipDao.getId() != id)) {
+            log.error("There is no such id");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         DrownedRussianShip ship = shipDao.findById(id).get();
         if (drownedRussianShip.getName() != null)
             ship.setName(drownedRussianShip.getName());
@@ -337,6 +359,7 @@ public class DrownedShipService implements IDrownedShipService {
             shipDao.save(drownedRussianShip);
             return new ResponseEntity<>(shipDao.findAll().stream().map(DrownedRussianShipWithWeaponDTO::new).collect(Collectors.toList()), HttpStatus.OK);
         } else {
+            log.error("DrownedRussianShip is null!!!");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -351,6 +374,7 @@ public class DrownedShipService implements IDrownedShipService {
                     .map(DrownedRussianShipWithWeaponDTO::new)
                     .collect(Collectors.toList()), HttpStatus.OK);
         } else {
+            log.error("There is no such id!!!");
             return new ResponseEntity<>(shipDao
                     .findAll()
                     .stream()
@@ -373,6 +397,7 @@ public class DrownedShipService implements IDrownedShipService {
     public ResponseEntity<DrownedRussianShipWithAllComponentsDTO> findDrownedWarshipWithAllComponents(int id) {
         DrownedRussianShip drownedRussianShip = shipDao.findById(id).orElse(new DrownedRussianShip());
         if (drownedRussianShip.getId() == 0) {
+            log.error("No content to show");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(new DrownedRussianShipWithAllComponentsDTO(drownedRussianShip), HttpStatus.OK);
@@ -401,8 +426,10 @@ public class DrownedShipService implements IDrownedShipService {
 
     @Override
     public ResponseEntity<DrownedRussianShipWithAllComponentsDTO> updateDrownedWarshipWithAllComponents(int id, DrownedRussianShip drownedRussianShip) {
-        if (shipDao.findAll().stream().allMatch(shipDao -> shipDao.getId() != id))
+        if (shipDao.findAll().stream().allMatch(shipDao -> shipDao.getId() != id)) {
+            log.error("There is no such id");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         DrownedRussianShip ship = shipDao.findById(id).get();
         if (drownedRussianShip.getName() != null)
             ship.setName(drownedRussianShip.getName());
@@ -424,6 +451,7 @@ public class DrownedShipService implements IDrownedShipService {
             shipDao.save(drownedRussianShip);
             return new ResponseEntity<>(shipDao.findAll().stream().map(DrownedRussianShipWithAllComponentsDTO::new).collect(Collectors.toList()), HttpStatus.OK);
         } else {
+            log.error("DrownedRussianShip is null!!!");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -438,6 +466,7 @@ public class DrownedShipService implements IDrownedShipService {
                     .map(DrownedRussianShipWithAllComponentsDTO::new)
                     .collect(Collectors.toList()), HttpStatus.OK);
         } else {
+            log.error("There is no such id!!!");
             return new ResponseEntity<>(shipDao
                     .findAll()
                     .stream()

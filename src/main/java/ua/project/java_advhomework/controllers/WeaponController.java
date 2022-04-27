@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.project.java_advhomework.dao.IWeaponDao;
 import ua.project.java_advhomework.models.dto.WeaponDTO;
 import ua.project.java_advhomework.models.entity.Weapon;
+import ua.project.java_advhomework.services.IWeaponService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,67 +16,35 @@ import java.util.stream.Collectors;
 @RequestMapping("/weapons")
 @AllArgsConstructor
 public class WeaponController {
-    private IWeaponDao weaponDao;
+    private IWeaponService weaponService;
 
     @GetMapping("")
     public ResponseEntity<List<WeaponDTO>> findAllWeapons() {
-        List<Weapon> weapons = weaponDao.findAll();
-        List<WeaponDTO> weaponDTOS = weapons.stream().map(WeaponDTO::new).collect(Collectors.toList());
-        return new ResponseEntity<>(weaponDTOS, HttpStatus.OK);
+        return weaponService.findAllWeapons();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<WeaponDTO> findWeaponById(@PathVariable int id) {
-        Weapon weapon = weaponDao.findById(id).orElse(new Weapon());
-        if (weapon.getId() == 0) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(new WeaponDTO(weapon), HttpStatus.OK);
+        return weaponService.findWeaponById(id);
     }
 
     @GetMapping("/findByCode_{code}")
     public ResponseEntity<List<WeaponDTO>> findByCode (@PathVariable String code) {
-        List<Weapon> weapons = weaponDao.findByCode(code);
-        List<WeaponDTO> weaponDTOS = weapons.stream().map(WeaponDTO::new).collect(Collectors.toList());
-        return new ResponseEntity<>(weaponDTOS, HttpStatus.OK);
+        return weaponService.findByCode(code);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<WeaponDTO> updateWeapon (@PathVariable int id, @RequestBody Weapon weapon) {
-        Weapon weapon1 = weaponDao.findById(id).get();
-        if (weapon.getCode() != null) {
-            weapon1.setCode(weapon.getCode());
-            weaponDao.save(weapon1);
-            return new ResponseEntity<>(new WeaponDTO(weapon1), HttpStatus.OK);
-        } else
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return weaponService.updateWeapon(id, weapon);
     }
 
     @PostMapping("")
     public ResponseEntity<List<WeaponDTO>> saveWeapon (@RequestBody Weapon weapon) {
-        if (weapon != null) {
-            weaponDao.save(weapon);
-            return new ResponseEntity<>(weaponDao.findAll().stream().map(WeaponDTO::new).collect(Collectors.toList()), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        return weaponService.saveWeapon(weapon);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<List<WeaponDTO>> deleteFromListOfWeapons (@PathVariable int id) {
-        if (id != 0) {
-            weaponDao.deleteById(id);
-            return new ResponseEntity<>(weaponDao
-                    .findAll()
-                    .stream()
-                    .map(WeaponDTO::new)
-                    .collect(Collectors.toList()), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(weaponDao
-                    .findAll()
-                    .stream()
-                    .map(WeaponDTO::new)
-                    .collect(Collectors.toList()), HttpStatus.BAD_REQUEST);
-        }
+        return weaponService.deleteFromListOfWeapons(id);
     }
 }

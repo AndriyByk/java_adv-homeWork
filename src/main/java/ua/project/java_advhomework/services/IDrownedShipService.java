@@ -1,8 +1,6 @@
 package ua.project.java_advhomework.services;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import ua.project.java_advhomework.models.dto.*;
 import ua.project.java_advhomework.models.entity.DrownedRussianShip;
 
