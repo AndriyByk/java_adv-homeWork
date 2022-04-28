@@ -21,6 +21,7 @@ public class CaptainService implements ICaptainService {
 
     @Override
     public ResponseEntity<List<CaptainDTO>> getDeadCaptains() {
+        log.info("All captains were found.");
         return new ResponseEntity<>(captainDAO
                 .findAll()
                 .stream()
@@ -35,6 +36,7 @@ public class CaptainService implements ICaptainService {
             log.error("No content to show");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        log.info("Captain was found.");
         return new ResponseEntity<>(new CaptainDTO(captain), HttpStatus.OK);
     }
 
@@ -42,6 +44,7 @@ public class CaptainService implements ICaptainService {
     public ResponseEntity<List<CaptainDTO>> findByName(String name) {
         List<Captain> captainsByName = captainDAO.findByName(name);
         List<CaptainDTO> captainDTOS = captainsByName.stream().map(CaptainDTO::new).collect(Collectors.toList());
+        log.info("All captains with appropriate name were found.");
         return new ResponseEntity<>(captainDTOS, HttpStatus.OK);
     }
 
@@ -55,6 +58,7 @@ public class CaptainService implements ICaptainService {
         if (captain.getName() != null) {
             captain1.setName(captain.getName());
             captainDAO.save(captain1);
+            log.info("Captain was successfully updated.");
             return new ResponseEntity<>(new CaptainDTO(captain1), HttpStatus.OK);
         } else {
             log.error("Captain name is null!!!");
@@ -66,6 +70,7 @@ public class CaptainService implements ICaptainService {
     public ResponseEntity<List<CaptainDTO>> killCaptain(Captain captain) {
         if (captain != null) {
             captainDAO.save(captain);
+            log.info("Captain was successfully killed!!!!!!");
             return new ResponseEntity<>(captainDAO.findAll().stream().map(CaptainDTO::new).collect(Collectors.toList()), HttpStatus.OK);
         } else {
             log.error("Captain is null!!!");
@@ -77,6 +82,7 @@ public class CaptainService implements ICaptainService {
     public ResponseEntity<List<CaptainDTO>> deleteFromListOfDeadCaptains(int id) {
         if (id != 0) {
             captainDAO.deleteById(id);
+            log.info("Captain was deleted from list");
             return new ResponseEntity<>(captainDAO
                     .findAll()
                     .stream()

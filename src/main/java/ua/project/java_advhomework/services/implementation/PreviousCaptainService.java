@@ -23,6 +23,7 @@ public class PreviousCaptainService implements IPreviousCaptainService {
     public ResponseEntity<List<PreviousCaptainDTO>> findAllPreviousCaptains() {
         List<PreviousCaptain> allCaptains = prevCaptainDao.findAll();
         List<PreviousCaptainDTO> allCaptainDTOS = allCaptains.stream().map(PreviousCaptainDTO::new).collect(Collectors.toList());
+        log.info("All previous captains were found.");
         return new ResponseEntity<>(allCaptainDTOS, HttpStatus.OK);
     }
 
@@ -33,6 +34,7 @@ public class PreviousCaptainService implements IPreviousCaptainService {
             log.error("No content to show");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+        log.info("Previous captain was found.");
         return new ResponseEntity<>(new PreviousCaptainDTO(previousCaptain), HttpStatus.OK);
     }
 
@@ -40,6 +42,7 @@ public class PreviousCaptainService implements IPreviousCaptainService {
     public ResponseEntity<List<PreviousCaptainDTO>> findByName(String name) {
         List<PreviousCaptain> captainsByName = prevCaptainDao.findByName(name);
         List<PreviousCaptainDTO> previousCaptainDTOS = captainsByName.stream().map(PreviousCaptainDTO::new).collect(Collectors.toList());
+        log.info("All previous captains with appropriate name were found.");
         return new ResponseEntity<>(previousCaptainDTOS, HttpStatus.OK);
     }
 
@@ -53,6 +56,7 @@ public class PreviousCaptainService implements IPreviousCaptainService {
         if (captain.getName() != null) {
             captain1.setName(captain.getName());
             prevCaptainDao.save(captain1);
+            log.info("Previous captain was successfully updated.");
             return new ResponseEntity<>(new PreviousCaptainDTO(captain1), HttpStatus.OK);
         } else {
             log.error("Previous captain name is null!!!");
@@ -64,6 +68,7 @@ public class PreviousCaptainService implements IPreviousCaptainService {
     public ResponseEntity<List<PreviousCaptainDTO>> savePreviousCaptainWithShip(PreviousCaptain previousCaptain) {
         if (previousCaptain != null) {
             prevCaptainDao.save(previousCaptain);
+            log.info("Previous captain was successfully killed!!!!!!");
             return new ResponseEntity<>(prevCaptainDao.findAll().stream().map(PreviousCaptainDTO::new).collect(Collectors.toList()), HttpStatus.OK);
         } else {
             log.error("Previous captain is null!!!");
@@ -75,6 +80,7 @@ public class PreviousCaptainService implements IPreviousCaptainService {
     public ResponseEntity<List<PreviousCaptainDTO>> deleteFromListOfPreviousCaptains(int id) {
         if (id != 0) {
             prevCaptainDao.deleteById(id);
+            log.info("Previous captain was deleted from list");
             return new ResponseEntity<>(prevCaptainDao
                     .findAll()
                     .stream()

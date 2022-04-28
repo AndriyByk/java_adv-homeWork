@@ -23,6 +23,7 @@ public class WeaponService implements IWeaponService {
     public ResponseEntity<List<WeaponDTO>> findAllWeapons() {
         List<Weapon> weapons = weaponDao.findAll();
         List<WeaponDTO> weaponDTOS = weapons.stream().map(WeaponDTO::new).collect(Collectors.toList());
+        log.info("All weapons were found.");
         return new ResponseEntity<>(weaponDTOS, HttpStatus.OK);
     }
 
@@ -33,6 +34,7 @@ public class WeaponService implements IWeaponService {
             log.error("No content to show");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+        log.info("Weapon was found.");
         return new ResponseEntity<>(new WeaponDTO(weapon), HttpStatus.OK);
     }
 
@@ -40,6 +42,7 @@ public class WeaponService implements IWeaponService {
     public ResponseEntity<List<WeaponDTO>> findByCode(String code) {
         List<Weapon> weapons = weaponDao.findByCode(code);
         List<WeaponDTO> weaponDTOS = weapons.stream().map(WeaponDTO::new).collect(Collectors.toList());
+        log.info("All weapons with appropriate code were found.");
         return new ResponseEntity<>(weaponDTOS, HttpStatus.OK);
     }
 
@@ -53,6 +56,7 @@ public class WeaponService implements IWeaponService {
         if (weapon.getCode() != null) {
             weapon1.setCode(weapon.getCode());
             weaponDao.save(weapon1);
+            log.info("Weapon was successfully updated.");
             return new ResponseEntity<>(new WeaponDTO(weapon1), HttpStatus.OK);
         } else {
             log.error("Weapon code is null!!!");
@@ -64,6 +68,7 @@ public class WeaponService implements IWeaponService {
     public ResponseEntity<List<WeaponDTO>> saveWeapon(Weapon weapon) {
         if (weapon != null) {
             weaponDao.save(weapon);
+            log.info("Weapon was successfully destroyed!!!!!!");
             return new ResponseEntity<>(weaponDao.findAll().stream().map(WeaponDTO::new).collect(Collectors.toList()), HttpStatus.OK);
         } else {
             log.error("Weapon is null!!!");
@@ -75,6 +80,7 @@ public class WeaponService implements IWeaponService {
     public ResponseEntity<List<WeaponDTO>> deleteFromListOfWeapons(int id) {
         if (id != 0) {
             weaponDao.deleteById(id);
+            log.info("Weapon was deleted from list");
             return new ResponseEntity<>(weaponDao
                     .findAll()
                     .stream()
