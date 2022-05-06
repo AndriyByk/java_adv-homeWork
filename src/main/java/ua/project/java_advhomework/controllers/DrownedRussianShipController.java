@@ -4,11 +4,15 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ua.project.java_advhomework.dao.IRussianShipDao;
 import ua.project.java_advhomework.models.dto.*;
 import ua.project.java_advhomework.models.entity.DrownedRussianShip;
+import ua.project.java_advhomework.models.entity.Type;
 import ua.project.java_advhomework.services.IDrownedShipService;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +25,31 @@ public class DrownedRussianShipController {
     public String welcome() {
         return "Welcome to hell!";
     }
+
+    ///////////////////////////////
+
+    @PostMapping("/warships_with_picture_and_email")
+    public ResponseEntity<List<DrownedRussianShip>> drownWarshipWithPictureAndSendDossier(
+            @RequestParam MultipartFile picture,
+            @RequestParam String name,
+            @RequestParam String email
+    ) throws IOException, MessagingException {
+        return shipService.drownWarshipWithMailAndPicture(picture, name, email);
+    }
+
+    ///////////////////////////////
+
+    @PostMapping("/warships_with_picture")
+    public ResponseEntity<List<DrownedRussianShip>> drownWarshipWithPicture(
+            @RequestParam MultipartFile picture,
+            @RequestParam String name,
+            @RequestParam int year,
+            @RequestParam int tonnage
+    ) throws IOException {
+        return shipService.drownWarshipWithPicture(picture, name, year, tonnage);
+    }
+
+    ///////////////////////////////
 
     @GetMapping("/warships_with_all_components")
     public ResponseEntity<List<DrownedRussianShipWithAllComponentsDTO>> findAllDrownedWarshipsWithAllComponents() {

@@ -1,12 +1,21 @@
 package ua.project.java_advhomework.services;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 import ua.project.java_advhomework.models.dto.*;
 import ua.project.java_advhomework.models.entity.DrownedRussianShip;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.List;
 
 public interface IDrownedShipService {
+
+    ResponseEntity<List<DrownedRussianShip>> drownWarshipWithPicture(MultipartFile picture, String name, int year,
+                                                                     int tonnage) throws IOException;
+    ResponseEntity<List<DrownedRussianShip>> drownWarshipWithMailAndPicture(MultipartFile picture, String name,
+                                                                     String email) throws IOException, MessagingException;
+    //////////////////
     ResponseEntity<List<DrownedRussianShipDTO>> findAllDrownedWarships();
     ResponseEntity<DrownedRussianShipDTO> findDrownedWarshipById(int id);
     ResponseEntity<List<DrownedRussianShipDTO>> findByName(String name);

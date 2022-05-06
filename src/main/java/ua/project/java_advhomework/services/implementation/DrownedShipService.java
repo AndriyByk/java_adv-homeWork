@@ -5,11 +5,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ua.project.java_advhomework.dao.IRussianShipDao;
 import ua.project.java_advhomework.models.dto.*;
 import ua.project.java_advhomework.models.entity.DrownedRussianShip;
+import ua.project.java_advhomework.services.DossierByMailService;
 import ua.project.java_advhomework.services.IDrownedShipService;
 
+import javax.mail.MessagingException;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +23,38 @@ import java.util.stream.Collectors;
 @Slf4j
 public class DrownedShipService implements IDrownedShipService {
     private IRussianShipDao shipDao;
+    private DossierByMailService dossierSender;
+
+    @Override
+    public ResponseEntity<List<DrownedRussianShip>> drownWarshipWithMailAndPicture(MultipartFile picture, String name, String email) throws IOException, MessagingException {
+        DrownedRussianShip drownedShip = new DrownedRussianShip(picture.getOriginalFilename(), name, email);
+        shipDao.save(drownedShip);
+
+        DrownedRussianShipForMailingDTO drownedShipWithMail = new DrownedRussianShipForMailingDTO(drownedShip);
+        dossierSender.send(drownedShipWithMail, picture);
+
+        String path = System.getProperty("user.home") + File.separator + "Pictures" + File.separator;
+        picture.transferTo(new File(path + picture.getOriginalFilename()));
+
+        return new ResponseEntity<>(shipDao.findAll(), HttpStatus.OK);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public ResponseEntity<List<DrownedRussianShip>> drownWarshipWithPicture (
+            MultipartFile picture,
+            String name,
+            int year,
+            int tonnage
+    ) throws IOException {
+        shipDao.save(new DrownedRussianShip(picture.getOriginalFilename(), name, year, tonnage));
+
+        String path = System.getProperty("user.home") + File.separator + "Pictures" + File.separator;
+        picture.transferTo(new File(path + picture.getOriginalFilename()));
+        return new ResponseEntity<>(shipDao.findAll(), HttpStatus.OK);
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
     public ResponseEntity<List<DrownedRussianShipDTO>> findAllDrownedWarships() {

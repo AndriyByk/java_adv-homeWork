@@ -1,9 +1,6 @@
 package ua.project.java_advhomework.models.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,6 +10,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @Entity
+
 public class DrownedRussianShip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +19,28 @@ public class DrownedRussianShip {
     private int year;
     private int tonnage;
     private Type type;
+
+    private String picture;
+    private String email;
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public DrownedRussianShip(String picture, String name, String email) {
+        this.picture = picture;
+        this.name = name;
+        this.email = email;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public DrownedRussianShip(String picture, String name, int year, int tonnage) {
+        this.picture = picture;
+        this.name = name;
+        this.year = year;
+        this.tonnage = tonnage;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @ToString.Exclude
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

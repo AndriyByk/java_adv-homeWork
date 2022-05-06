@@ -9,4 +9,5 @@ public interface IRussianShipDao extends JpaRepository <DrownedRussianShip, Inte
     List<DrownedRussianShip> findByName(String name);
     List<DrownedRussianShip> findByYear(int year);
     List<DrownedRussianShip> findByTonnage(int tonnage);
+
 }
