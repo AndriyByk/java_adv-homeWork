@@ -2,7 +2,6 @@ package ua.project.java_advhomework.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,7 +13,7 @@ import javax.mail.internet.MimeMessage;
 
 @Service
 @AllArgsConstructor
-public class DossierByMailService extends JavaMailSenderImpl {
+public class DossierByMailService {
     private JavaMailSender javaMailSender;
 
     public void send(DrownedRussianShipForMailingDTO shipWithMail, MultipartFile multipartFile) throws MessagingException {
