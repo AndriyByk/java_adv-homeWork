@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.project.java_advhomework.dao.IRussianShipDao;
+import ua.project.java_advhomework.filters.DrownedRussianShipFilter;
 import ua.project.java_advhomework.models.dto.*;
 import ua.project.java_advhomework.models.entity.DrownedRussianShip;
 import ua.project.java_advhomework.services.IDrownedShipService;
@@ -53,8 +54,7 @@ public class DrownedRussianShipController {
     }
 
     @PostMapping("/warships_with_all_components")
-    public ResponseEntity<List<DrownedRussianShipWithAllComponentsDTO>> drownWarshipWithAllComponents(@RequestBody DrownedRussianShip drownedRussianShip) {
-        return shipService.drownWarshipWithAllComponents(drownedRussianShip);
+    public void drownWarshipWithAllComponents() {
     }
 
     @DeleteMapping("/warships_with_all_components/{id}")
@@ -95,8 +95,7 @@ public class DrownedRussianShipController {
     }
 
     @PostMapping("/warships_with_weapon")
-    public ResponseEntity<List<DrownedRussianShipWithWeaponDTO>> drownWarshipWithWeapon(@RequestBody DrownedRussianShip drownedRussianShip) {
-        return shipService.drownWarshipWithWeapon(drownedRussianShip);
+    public void drownWarshipWithWeapon() {
     }
 
     @DeleteMapping("/warships_with_weapon/{id}")
@@ -137,8 +136,7 @@ public class DrownedRussianShipController {
     }
 
     @PostMapping("/warships_with_previous_captains")
-    public ResponseEntity<List<DrownedRussianShipWithPreviousCaptainDTO>> drownWarshipWithPreviousCaptain(@RequestBody DrownedRussianShip drownedRussianShip) {
-        return shipService.drownWarshipWithPreviousCaptain(drownedRussianShip);
+    public void drownWarshipWithPreviousCaptain() {
     }
 
     @DeleteMapping("/warships_with_previous_captains/{id}")
@@ -179,8 +177,7 @@ public class DrownedRussianShipController {
     }
 
     @PostMapping("/warships_with_captains")
-    public ResponseEntity<List<DrownedRussianShipWithCaptainDTO>> drownWarshipWithCaptain(@RequestBody DrownedRussianShip drownedRussianShip) {
-        return shipService.drownWarshipWithCaptain(drownedRussianShip);
+    public void drownWarshipWithCaptain() {
     }
 
     @DeleteMapping("/warships_with_captains/{id}")
@@ -221,8 +218,7 @@ public class DrownedRussianShipController {
     }
 
     @PostMapping("/warships")
-    public ResponseEntity<List<DrownedRussianShipDTO>> drownWarship(@RequestBody DrownedRussianShip drownedRussianShip) {
-        return shipService.drownWarship(drownedRussianShip);
+    public void drownWarship() {
     }
 
     @DeleteMapping("/warships/{id}")

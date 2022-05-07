@@ -16,7 +16,4 @@ public class PreviousCaptain {
     private int id;
     private String name;
     private int durationOfService;
-
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    private DrownedRussianShip drownedRussianShip;
 }
