@@ -26,30 +26,30 @@ public class DrownedRussianShipFilter implements Filter {
         String requestMethod = httpServletRequest.getMethod();
         String requestURI = httpServletRequest.getRequestURI();
         String[] partsOfURI = requestURI.split("/");
-        if (requestMethod.equals("POST")) {
-            DrownedRussianShip ship = new ObjectMapper().readValue(httpServletRequest.getInputStream(), DrownedRussianShip.class);
-            switch (partsOfURI[1]) {
-                case "warships": {
-                    shipService.drownWarship(ship);
-                    break;
-                }
-                case "warships_with_captains": {
-                    shipService.drownWarshipWithCaptain(ship);
-                    break;
-                }
-                case "warships_with_previous_captains": {
-                    shipService.drownWarshipWithPreviousCaptain(ship);
-                    break;
-                }
-                case "warships_with_weapon": {
-                    shipService.drownWarshipWithWeapon(ship);
-                    break;
-                }
-                case "warships_with_all_components": {
-                    shipService.drownWarshipWithAllComponents(ship);
-                }
-            }
-        }
+//        if (requestMethod.equals("POST")) {
+//            DrownedRussianShip ship = new ObjectMapper().readValue(httpServletRequest.getInputStream(), DrownedRussianShip.class);
+//            switch (partsOfURI[1]) {
+//                case "warships": {
+//                    shipService.drownWarship(ship);
+//                    break;
+//                }
+//                case "warships_with_captains": {
+//                    shipService.drownWarshipWithCaptain(ship);
+//                    break;
+//                }
+//                case "warships_with_previous_captains": {
+//                    shipService.drownWarshipWithPreviousCaptain(ship);
+//                    break;
+//                }
+//                case "warships_with_weapon": {
+//                    shipService.drownWarshipWithWeapon(ship);
+//                    break;
+//                }
+//                case "warships_with_all_components": {
+//                    shipService.drownWarshipWithAllComponents(ship);
+//                }
+//            }
+//        }
         filterChain.doFilter(servletRequest, servletResponse);
     }
 }

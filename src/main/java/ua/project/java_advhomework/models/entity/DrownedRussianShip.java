@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import ua.project.java_advhomework.models.utils.Type;
 
 import javax.persistence.*;
 import java.util.List;

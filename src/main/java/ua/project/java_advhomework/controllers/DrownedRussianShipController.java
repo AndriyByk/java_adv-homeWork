@@ -1,26 +1,35 @@
 package ua.project.java_advhomework.controllers;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.project.java_advhomework.dao.IRussianShipDao;
-import ua.project.java_advhomework.filters.DrownedRussianShipFilter;
 import ua.project.java_advhomework.models.dto.*;
 import ua.project.java_advhomework.models.entity.DrownedRussianShip;
+import ua.project.java_advhomework.models.entity.users.User;
 import ua.project.java_advhomework.services.IDrownedShipService;
+import ua.project.java_advhomework.services.IUserService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
 public class DrownedRussianShipController {
     private IDrownedShipService shipService;
+    private IUserService userService;
 
     @GetMapping("/")
     public String welcome() {
         return "Welcome to hell!";
+    }
+
+    @PostMapping("/save")
+    public void save(@RequestBody User user) {
+        userService.save(user);
+    }
+
+    @PostMapping("/login")
+    public void login() {
+        System.out.println("User was logged in!!!!!!");
     }
 
     @GetMapping("/warships_with_all_components")

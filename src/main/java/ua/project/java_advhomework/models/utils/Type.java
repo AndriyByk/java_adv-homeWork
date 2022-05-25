@@ -1,4 +1,4 @@
-package ua.project.java_advhomework.models.entity;
+package ua.project.java_advhomework.models.utils;
 
 public enum Type {
     frigate,
